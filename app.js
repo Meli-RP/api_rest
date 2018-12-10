@@ -29,3 +29,19 @@ mongoose.connect('mongodb://localhost/tvshows', function(err, res) {
     console.log("Node server running on http://localhost:3000");
   });
 });
+
+var TVShowCtrl = require('./controllers/tvshows');
+
+// API routes
+var tvshows = express.Router();
+
+tvshows.route('/tvshows')
+  .get(TVShowCtrl.findAllTVShows)
+  .post(TVShowCtrl.addTVShow);
+
+tvshows.route('/tvshows/:id')
+  .get(TVShowCtrl.findById)
+  .put(TVShowCtrl.updateTVShow)
+  .delete(TVShowCtrl.deleteTVShow);
+
+app.use('/api', tvshows);
